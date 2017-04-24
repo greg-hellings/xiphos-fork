@@ -14,6 +14,7 @@ case "${distro}" in
 	fedora|centos)
 		if [ "${distro}" == "centos" ]; then
 			mgr=yum
+		    docker exec -it "${container}" yum install -y epel-release
 		else
 			mgr=dnf
 		fi
