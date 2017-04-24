@@ -32,7 +32,7 @@ case "${distro}" in
                     libgsf-devel \
                     libuuid-devel \
                     rarian-compat \
-                    gtkhtml4"
+                    gtkhtml3-devel"
         if [[ "${tag}" == "7" || "${tag}" == "25" ]]; then
             installer="${installer} webkitgtk3-devel"
         else
@@ -61,5 +61,3 @@ case "${distro}" in
         ;;
 esac
 docker exec -t "${container}" ${installer}
-# Remove from Docker
-docker rm -f "${container}"
