@@ -15,4 +15,3 @@ env:
   - TEST=build_linux TEST_ARGS=ubuntu:17.04
   # LTS Ubuntu releases
   - TEST=build_linux TEST_ARGS=ubuntu:16.04
-  - TEST=build_linux TEST_ARGS=ubuntu:14.04
