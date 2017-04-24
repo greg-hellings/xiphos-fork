@@ -3,7 +3,7 @@ services:
   - docker
 
 script:
-  - ./tests/${TEST}.sh ${TEST_ARGS}
+  - ./tests/travis/${TEST}.sh ${TEST_ARGS}
 
 env:
   # Current version of Fedora
