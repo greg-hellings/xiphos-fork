@@ -30,9 +30,12 @@ case "${distro}" in
                     intltool \
                     libgsf-devel \
                     libuuid-devel \
-                    rarian-compat \
-                    webkitgtk4-devel \
-                    gtkhtml3-devel"
+                    rarian-compat"
+		if [[ "${tag}" == "7" || "${tag}" == "25" ]]; then
+			installer="${installer} webkitgtk3-devel"
+		else
+			installer="${installer} webkitgtk4-devel"
+		fi
 		;;
 	ubuntu)
 		docker exec -t "${container}" apt-get update
@@ -51,15 +54,15 @@ case "${distro}" in
 				   libgsf-1-dev \
                    uuid-dev \
 				   rarian-compat"
-		if [ "x${tag}" == "x14.04" ]; then
-			installer="${installer} libwebkit2gtk-3.0-dev"
-		elif [ "x${tag}" == "x16.04" ]; then
-			installer="${installer} libwebkit2gtk-4.0-dev libbiblesync-dev"
+		if [ "${tag}" == "14.04" ]; then
+			installer="${installer} libwebkitgtk-3.0-dev"
+		elif [ "${tag}" == "16.04" ]; then
+			installer="${installer} libwebkitgtk-3.0-dev libbiblesync-dev"
 		fi
 		;;
 esac
 docker exec -t "${container}" ${installer}
 # Run the tests
-docker exec -t "${container}" /xiphos/tests/build_gtk3.sh
+docker exec -t "${container}" /xiphos/tests/build_gtk3.sh "${distro}" "${tag}"
 # Remove from Docker
 docker rm -f "${container}"

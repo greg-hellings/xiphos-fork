@@ -1,7 +1,12 @@
 #!/bin/bash
 set -ve
-SRC="$(readlink -f "$(dirname "${0}")/../")"
-cd "${SRC}"
+src="$(readlink -f "$(dirname "${0}")/../")"
+distro="${1}"
+tag="${2}"
+cd "${src}"
+if [[ "${distro}" == "ubuntu" ]]; then
+	export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/usr/lib/x86_64-linux-gnu/pkgconfig/;
+fi
 ./waf configure --enable-webkit2 --gtk=3 --enable-webkit-editor
 ./waf build -j2
 ./waf install
