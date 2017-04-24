@@ -12,8 +12,6 @@ tag="$(echo "${version}" | sed -e 's/^.*://')"
 docker run --name "${container}" --volume "${srcdir}:/xiphos" -t -d "${version}" /bin/bash
 case "${distro}" in
 	fedora)
-		;&
-	centos)
 		installer="dnf install -y sword-devel \
                     gcc-c++ \
                     gtk3-devel \
@@ -30,6 +28,9 @@ case "${distro}" in
                     rarian-compat \
                     webkitgtk4-devel \
                     gtkhtml3-devel"
+		;&
+	centos)
+		installer="$(echo "${installer}" | sed -e 's/dnf/yum/')"
 		;;
 	ubuntu)
 		docker exec -t "${container}" apt-get update
