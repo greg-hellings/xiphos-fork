@@ -1,14 +1,14 @@
 #!/bin/bash
 
 set -ve
-version="${1}"
+distro="${1}"
+tag="${2}"
+version="${distro}:${tag}"
 srcdir="$(readlink -f "$(dirname "${0}")/../../")"
 container=xiphos_test
 # First, create the container
 docker pull "${version}"
 # Install necessary packages
-distro="${version%:*}"
-tag="${version#*:}"
 docker run --name "${container}" --volume "${srcdir}:/xiphos" -t -d "${version}" /bin/bash
 case "${distro}" in
     fedora|centos)
@@ -31,7 +31,8 @@ case "${distro}" in
                     intltool \
                     libgsf-devel \
                     libuuid-devel \
-                    rarian-compat"
+                    rarian-compat \
+                    gtkhtml4"
         if [[ "${tag}" == "7" || "${tag}" == "25" ]]; then
             installer="${installer} webkitgtk3-devel"
         else
@@ -55,12 +56,10 @@ case "${distro}" in
                    libgsf-1-dev \
                    uuid-dev \
                    rarian-compat \
-                   libwebkit2gtk-4.0-dev \
+                   libwebkitgtk-3.0-dev \
                    libbiblesync-dev"
         ;;
 esac
 docker exec -t "${container}" ${installer}
-# Run the tests
-docker exec -t "${container}" /xiphos/tests/build_gtk3.sh "${distro}" "${tag}"
 # Remove from Docker
 docker rm -f "${container}"

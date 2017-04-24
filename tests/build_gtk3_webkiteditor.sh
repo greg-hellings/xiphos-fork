@@ -7,6 +7,6 @@ cd "${src}"
 if [[ "${distro}" == "ubuntu" ]]; then
     export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:/usr/lib/x86_64-linux-gnu/pkgconfig/;
 fi
-./waf configure --enable-webkit2 --gtk=3
+./waf configure --enable-webkit-editor --gtk=3
 ./waf build -j2
 ./waf install

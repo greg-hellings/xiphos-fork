@@ -369,14 +369,7 @@ def configure(conf):
         if opt.webkit_editor:
             conf.define('USE_WEBKIT_EDITOR', 1)
             env['ENABLE_WEBKIT_EDITOR'] = True
-            if conf.check_cfg(modversion='webkit2gtk-4.0',
-                              msg='Checking for WebKit2',
-                              okmsg='ok',
-                              errmsg='fail'):
-                common_libs += ' "webkit2gtk-4.0" '
-                conf.define('USE_WEBKIT2', 1)
-            else:
-                common_libs += ' "webkitgtk-3.0" '
+            common_libs += ' "webkitgtk-3.0" '
         else:
             if conf.check_cfg(modversion='libgtkhtml-4.0',
                               msg='Checking for libgtkhtml4',
