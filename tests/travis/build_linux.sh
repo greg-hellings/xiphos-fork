@@ -7,12 +7,17 @@ container=xiphos_test
 # First, create the container
 docker pull "${version}"
 # Install necessary packages
-distro="$(echo "${version}" | sed -e 's/:.*$//')"
-tag="$(echo "${version}" | sed -e 's/^.*://')"
+distro="${version%:*}"
+tag="${version#*:}"
 docker run --name "${container}" --volume "${srcdir}:/xiphos" -t -d "${version}" /bin/bash
 case "${distro}" in
-	fedora)
-		installer="dnf install -y sword-devel \
+	fedora|centos)
+		if [ "${distro}" == "centos" ]; then
+			mgr=yum
+		else
+			mgr=dnf
+		fi
+		installer="${mgr} install -y sword-devel \
                     gcc-c++ \
                     gtk3-devel \
                     biblesync-devel \
@@ -28,9 +33,6 @@ case "${distro}" in
                     rarian-compat \
                     webkitgtk4-devel \
                     gtkhtml3-devel"
-		;&
-	centos)
-		installer="$(echo "${installer}" | sed -e 's/dnf/yum/')"
 		;;
 	ubuntu)
 		docker exec -t "${container}" apt-get update
@@ -48,10 +50,10 @@ case "${distro}" in
                    intltool \
 				   libgsf-1-dev \
                    uuid-dev \
-				   rarian-compat" \
-		if [ "${tag}" == "14.04" ]; then
+				   rarian-compat"
+		if [ "x${tag}" == "x14.04" ]; then
 			installer="${installer} libwebkit2gtk-3.0-dev"
-		elif [ "${tag}" == "16.04" ]; then
+		elif [ "x${tag}" == "x16.04" ]; then
 			installer="${installer} libwebkit2gtk-4.0-dev libbiblesync-dev"
 		fi
 		;;
