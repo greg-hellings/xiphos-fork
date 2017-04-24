@@ -38,7 +38,6 @@ case "${distro}" in
 		           libsword-dev \
 				   gcc \
 				   g++ \
-				   libbiblesync-dev \
 				   libgtk-3-dev \
 				   libdbus-glib-1-dev \
 			       docbook-utils \
@@ -49,8 +48,12 @@ case "${distro}" in
                    intltool \
 				   libgsf-1-dev \
                    uuid-dev \
-				   rarian-compat \
-				   libwebkit2gtk-3.0-dev"
+				   rarian-compat" \
+		if [ "${tag}" == "14.04" ]; then
+			installer="${installer} libwebkit2gtk-3.0-dev"
+		elif [ "${tag}" == "16.04" ]; then
+			installer="${installer} libwebkit2gtk-4.0-dev libbiblesync-dev"
+		fi
 		;;
 esac
 docker exec -t "${container}" ${installer}
