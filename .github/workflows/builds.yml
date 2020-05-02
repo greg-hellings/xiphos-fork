@@ -17,18 +17,18 @@ jobs:
       - name: checkout Xiphos
         uses: actions/checkout@v2
         with:
-          path: xiphos
           fetch-depth: 0
       - name: fetch history
         run: |
-          cd xiphos && git fetch origin +refs/tags/*:refs/tags/*
+          git fetch origin +refs/tags/*:refs/tags/*
       - name: build windows targets
         shell: bash
         id: build
         run: |
           set -ex -o pipefail
-          docker run -i --rm -v "$(pwd):/source" fedora:30 /source/xiphos/win32/xc-xiphos-win.sh ${{ matrix.version }}
-          echo "::set-output name=artifact::$(ls xiphos/*.exe)"
+          docker build -t xiphos win32
+          docker run -i --rm -v "$(pwd):/source" xiphos ${{ matrix.version }}
+          echo "::set-output name=artifact::$(ls *.exe)"
       - name: upload artifact
         uses: actions/upload-artifact@master
         with:
