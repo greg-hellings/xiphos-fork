@@ -92,6 +92,7 @@ jobs:
         id: release
         run: |
           set -ex
+          ls -R
           gunzip -k *.tar.gz
           xz *.tar
           echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
