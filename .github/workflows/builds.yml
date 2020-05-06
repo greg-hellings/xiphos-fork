@@ -86,9 +86,8 @@ jobs:
     if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: packages
+      - name: download all the artifacts
+        uses: actions/download-artifact@v2
       - name: prepare for release
         id: release
         run: |
@@ -99,7 +98,7 @@ jobs:
       - name: create release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: packages/*
+          artifacts: "*"
           allowUpdates: true
           name: Release ${{ steps.release.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
