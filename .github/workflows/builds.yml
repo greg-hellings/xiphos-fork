@@ -96,6 +96,8 @@ jobs:
         id: release
         run: |
           set -ex
+          ls -R
+          unzip packages.zip
           cd packages
           gunzip -k *.tar.gz
           xz *.tar
