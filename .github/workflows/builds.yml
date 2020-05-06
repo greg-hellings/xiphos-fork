@@ -93,13 +93,15 @@ jobs:
         run: |
           set -ex
           ls -R
+          cd source
           gunzip -k *.tar.gz
           xz *.tar
+          cd ..
           echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
       - name: create release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.6.1
         with:
-          artifacts: "*"
+          artifacts: source/*,windows-installers/*
           allowUpdates: true
           name: Release ${{ steps.release.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
