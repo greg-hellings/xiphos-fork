@@ -69,12 +69,18 @@ jobs:
           python docker-build --name ${{ matrix.distro }} -vvvv --config .ci-build.yml --build scripts
         env:
           TEMP: ${{ runner.temp }}
-      - name: upload source artifact
+      - name: upload source tarball
         uses: actions/upload-artifact@master
-        if: steps.build.outputs.artifact
+        if: steps.build.outputs.targz
         with:
           name: packages
-          path: ${{ steps.build.outputs.artifact }}
+          path: ${{ steps.build.outputs.targz }}
+      - name: upload source zipfile
+        uses: actions/upload-artifact@master
+        if: steps.build.outputs.zipfile
+        with:
+          name: packages
+          path: ${{ steps.build.outputs.zipfile }}
 
   deploy:
     needs:
