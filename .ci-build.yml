@@ -193,5 +193,3 @@ build_scripts:
     cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DGTKHTML=ON -DCMAKE_MAKE_PROGRAM=/usr/bin/make .
     make -C build -j$(nproc)
     make -C build mhelp package_source
-    echo "::set-output name=targz::$(ls build/*.tar.gz)"
-    echo "::set-output name=zipfile::$(ls build/*.zip)"
