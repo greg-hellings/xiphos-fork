@@ -3206,7 +3206,7 @@ msgstr "Incrementar sangría de párrafo"
 
 #: ../ui/gtk2_webedit.ui.h:25 ../ui/gtk_webedit.ui.h:25
 msgid "Insert emoticon"
-msgstr "Insertar emoticono"
+msgstr "Insertar emoji"
 
 #: ../ui/gtk2_webedit.ui.h:26 ../ui/gtk_webedit.ui.h:26
 msgid "Emoticon"
